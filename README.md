@@ -10,6 +10,8 @@ However, the proposed approach can also be applied to other application like han
 
 This dataset is part of the dataset collection of the [STAR Center](https://star-center.shanghaitech.edu.cn/), [ShanghaiTech University](http://www.shanghaitech.edu.cn/eng): https://star-datasets.github.io/
 
+A video showing the data is available here: https://robotics.shanghaitech.edu.cn/datasets/VINS-RGBD
+
 ## Paper
 Shan, Zeyong, Ruijian Li, and Sören Schwertfeger. "RGBD-inertial trajectory estimation and mapping for ground robots." Sensors 19.10 (2019): 2251.
 
