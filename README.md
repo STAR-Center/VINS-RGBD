@@ -8,6 +8,24 @@ The approach contains
 
 However, the proposed approach can also be applied to other application like handheld and wheeled robot.
 
+This dataset is part of the dataset collection of the [STAR Center](https://star-center.shanghaitech.edu.cn/), [ShanghaiTech University](http://www.shanghaitech.edu.cn/eng): https://star-datasets.github.io/
+
+## Paper
+Shan, Zeyong, Ruijian Li, and Sören Schwertfeger. "RGBD-inertial trajectory estimation and mapping for ground robots." Sensors 19.10 (2019): 2251.
+
+
+    @article{shan2019rgbd,
+      title={RGBD-inertial trajectory estimation and mapping for ground robots},
+      author={Shan, Zeyong and Li, Ruijian and Schwertfeger, S{\"o}ren},
+      journal={Sensors},
+      volume={19},
+      number={10},
+      pages={2251},
+      year={2019},
+      publisher={Multidisciplinary Digital Publishing Institute}
+    }
+
+
 ## 1. Prerequisites
 1.1. **Ubuntu** 16.04 or 18.04.
 
