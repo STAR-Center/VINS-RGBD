@@ -57,7 +57,79 @@ Topics:
 + imu topic: /camera/imu
 
 
+## 3. Quick Start(Run with Docker)
+### 3.1. Build Docker Image
+make Dockerfile like below.
+```c
+FROM ros:melodic-ros-core-bionic
 
+# apt-get update
+RUN apt-get update
 
-## 3. Licence
+# install essentials
+RUN apt install -y gcc
+RUN apt install -y g++
+RUN apt-get install -y cmake
+RUN apt-get install -y wget
+RUN apt install -y git
+
+# install ceres
+WORKDIR /home
+RUN apt-get install -y libgoogle-glog-dev libgflags-dev
+RUN apt-get install -y libatlas-base-dev
+RUN apt-get install -y libeigen3-dev
+RUN apt-get install -y libsuitesparse-dev
+RUN wget http://ceres-solver.org/ceres-solver-2.1.0.tar.gz
+RUN tar zxf ceres-solver-2.1.0.tar.gz
+WORKDIR /home/ceres-solver-2.1.0
+RUN mkdir build
+WORKDIR /home/ceres-solver-2.1.0/build
+RUN cmake ..
+RUN make
+RUN make install
+
+# install sophus
+WORKDIR /home
+RUN git clone https://github.com/demul/Sophus.git
+WORKDIR /home/Sophus
+RUN git checkout fix/unit_complex_eror
+RUN mkdir build
+WORKDIR /home/Sophus/build
+RUN cmake ..
+RUN make
+RUN make install
+
+# install ros dependencies
+WORKDIR /home
+RUN mkdir ros_ws
+WORKDIR /home/ros_ws
+RUN apt-get -y install ros-melodic-cv-bridge
+RUN apt-get -y install ros-melodic-nodelet
+RUN apt-get -y install ros-melodic-tf
+RUN apt-get -y install ros-melodic-image-transport
+RUN apt-get -y install ros-melodic-rviz
+RUN apt-get -y install ros-melodic-pcl-ros
+
+# build vins-rgbd
+RUN mkdir src
+WORKDIR /home/ros_ws/src
+RUN git clone https://github.com/STAR-Center/VINS-RGBD
+WORKDIR /home/ros_ws
+RUN /bin/bash -c ". /opt/ros/melodic/setup.bash; cd /home/ros_ws; catkin_make"
+RUN echo "source /home/ros_ws/devel/setup.bash" >> ~/.bashrc
+```
+docker build --tag vins_rgbd:1.0 .
+
+### 3.2. Run Docker Container with X11
+docker run -it --name vins_rgbd -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -p 9999:9999 -p 9999:9999 vins_rgbd:1.0
+
+### 3.3. Launch VINS-RGBD inside Container
+#### 3.3.1. Terminal-1
+roslaunch vins_estimator realsense_color.launch 
+#### 3.3.2. Terminal-2
+roslaunch vins_estimator vins_rviz.launch 
+#### 3.3.2. Terminal-3
+rosbag play some_demo_data
+
+## 4. Licence
 The source code is released under [GPLv3](http://www.gnu.org/licenses/) license.
